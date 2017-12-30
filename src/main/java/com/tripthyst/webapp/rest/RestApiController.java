@@ -1,8 +1,10 @@
 package com.tripthyst.webapp.rest;
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import com.tripthyst.webapp.Mapper.PackageMapper;
 import com.tripthyst.webapp.model.PackageModel;
 import com.tripthyst.webapp.model.RestModelWrapper;
+import com.tripthyst.webapp.service.PackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +18,20 @@ import java.util.List;
 public class RestApiController {
 
     @Autowired
-    PackageMapper packageMapper;
+    PackageService packageService;
 
     @RequestMapping("/getAllPackages")
     public RestModelWrapper<List<PackageModel>> getAllPackage() {
 
-        RestModelWrapper<List<PackageModel>> result = new RestModelWrapper(packageMapper.selectAllPackage());
+        RestModelWrapper<List<PackageModel>> result;
+
+        List<PackageModel> allPackage = packageService.getAllPackage();
+
+        if (allPackage.size() == 0) {
+            result = new RestModelWrapper();
+        } else {
+            result = new RestModelWrapper(allPackage);
+        }
 
         return result;
     }
