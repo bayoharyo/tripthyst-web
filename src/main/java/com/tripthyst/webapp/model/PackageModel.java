@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PackageModel {
 
-    int id;
-    int idAgent;
-    String pakageName;
-    String description;
-    String destination;
-    double price;
+    private int id;
+    private int idAgent;
+    private String pakageName;
+    private String description;
+    private String destination;
+    private double price;
 
 }

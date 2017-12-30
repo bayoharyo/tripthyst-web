@@ -1,6 +1,8 @@
 package com.tripthyst.webapp.rest;
 
+import com.tripthyst.webapp.Mapper.PackageMapper;
 import com.tripthyst.webapp.model.PackageModel;
+import com.tripthyst.webapp.model.RestModelWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,17 +15,15 @@ import java.util.List;
 @RequestMapping("/api")
 public class RestApiController {
 
+    @Autowired
+    PackageMapper packageMapper;
+
     @RequestMapping("/getAllPackages")
-    public List<PackageModel> getAllPackage() {
-        PackageModel package1 = new PackageModel(1, 100, "Paket Lombok Murah", "Sudah termasuk transport di lokasi tujuan", "Lombok", 3000000);
-        PackageModel package2 = new PackageModel(2, 102, "Paket Bali Murah", "Belum termasuk transport di lokasi tujuan", "Bali", 4000000);
+    public RestModelWrapper<List<PackageModel>> getAllPackage() {
 
-        List<PackageModel> allPackage = new ArrayList<>();
+        RestModelWrapper<List<PackageModel>> result = new RestModelWrapper(packageMapper.selectAllPackage());
 
-        allPackage.add(package1);
-        allPackage.add(package2);
-
-        return allPackage;
+        return result;
     }
 
 }
