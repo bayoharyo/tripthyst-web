@@ -8,6 +8,7 @@ import com.tripthyst.webapp.service.PackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -34,6 +35,23 @@ public class RestApiController {
         }
 
         return result;
+    }
+
+    @RequestMapping("/getPackagesByDest/{id}")
+    public RestModelWrapper<List<PackageModel>> getPackagesByDest(@PathVariable("id") int id) {
+
+        RestModelWrapper<List<PackageModel>> result;
+
+        List<PackageModel> packages = packageService.getPackagesByDest(id);
+
+        if (packages == null) {
+            result = new RestModelWrapper();
+        } else {
+            result = new RestModelWrapper(packages);
+        }
+
+        return result;
+
     }
 
 }

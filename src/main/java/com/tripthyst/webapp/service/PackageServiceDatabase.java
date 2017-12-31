@@ -15,9 +15,11 @@ public class PackageServiceDatabase implements PackageService{
 
     @Override
     public List<PackageModel> getAllPackage() {
+        return  packageMapper.selectAllPackage();
+    }
 
-        List<PackageModel> allPackage = packageMapper.selectAllPackage();
-
-        return  allPackage;
+    @Override
+    public List<PackageModel> getPackagesByDest(int id) {
+        return packageMapper.selectPackagesByDest(id);
     }
 }

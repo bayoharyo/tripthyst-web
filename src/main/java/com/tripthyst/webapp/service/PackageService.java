@@ -8,4 +8,6 @@ public interface PackageService {
 
     public List<PackageModel> getAllPackage();
 
+    public List<PackageModel> getPackagesByDest(int id);
+
 }
