@@ -44,7 +44,7 @@ public class RestApiController {
 
         List<PackageModel> packages = packageService.getPackagesByDest(id);
 
-        if (packages == null) {
+        if (packages.size() == 0) {
             result = new RestModelWrapper();
         } else {
             result = new RestModelWrapper(packages);
