@@ -17,7 +17,7 @@ public interface PackageMapper {
             @Result(property = "destination", column = "destination"),
             @Result(property = "price", column = "price"),
     })
-    public List<PackageModel> selectAllPackage();
+    List<PackageModel> selectAllPackage();
 
     @Select("select * from travel_package where id=#{id}")
     @Results(value = {
@@ -28,6 +28,11 @@ public interface PackageMapper {
             @Result(property = "destination", column = "destination"),
             @Result(property = "price", column = "price"),
     })
-    public List<PackageModel> selectPackagesByDest(@Param("id") int id);
+    List<PackageModel> selectPackagesByDest(@Param("id") int id);
 
+    @Insert("insert into travel_package (id_agent, package_name, description, destination, price) values" +
+            " (#{idAgent}, #{package_name}, #{description}, #{destination}, #{price})")
+    void insertPackage(@Param("idAgent") int idAgent, @Param("package_name") String package_name,
+                       @Param("description") String description, @Param("destination") int destination,
+                       @Param("price") double price);
 }

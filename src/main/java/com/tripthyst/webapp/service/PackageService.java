@@ -6,8 +6,10 @@ import java.util.List;
 
 public interface PackageService {
 
-    public List<PackageModel> getAllPackage();
+    List<PackageModel> getAllPackage();
 
-    public List<PackageModel> getPackagesByDest(int id);
+    List<PackageModel> getPackagesByDest(int id);
+
+    void addPackage(int idAgent, String packageName, String description, int destination, double price);
 
 }

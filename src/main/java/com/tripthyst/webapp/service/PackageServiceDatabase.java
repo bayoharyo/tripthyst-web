@@ -22,4 +22,9 @@ public class PackageServiceDatabase implements PackageService{
     public List<PackageModel> getPackagesByDest(int id) {
         return packageMapper.selectPackagesByDest(id);
     }
+
+    @Override
+    public void addPackage(int idAgent, String packageName, String description, int destination, double price) {
+        packageMapper.insertPackage(idAgent, packageName, description, destination, price);
+    }
 }

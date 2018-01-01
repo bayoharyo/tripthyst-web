@@ -7,13 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PackageModel {
+public class AgentModel {
 
     private int id;
-    private int idAgent;
-    private String packageName;
-    private String description;
-    private int destination;
-    private double price;
+    private String username;
+    private String agentName;
+    private double rating;
 
 }
