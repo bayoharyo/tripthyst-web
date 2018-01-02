@@ -19,12 +19,8 @@ public class PackageServiceDatabase implements PackageService{
     }
 
     @Override
-    public List<PackageModel> getPackagesByDest(int id) {
-        return packageMapper.selectPackagesByDest(id);
+    public List<PackageModel> getPackagesByKeyword(String word) {
+        return packageMapper.selectPackagesByKeyword("%" + word + "%");
     }
 
-    @Override
-    public void addPackage(int idAgent, String packageName, String description, int destination, double price) {
-        packageMapper.insertPackage(idAgent, packageName, description, destination, price);
-    }
 }

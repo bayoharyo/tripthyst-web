@@ -13,6 +13,6 @@ public class AgentServiceDatabase implements AgentService{
 
     @Override
     public AgentModel getAgent(int id) {
-        return agentMapper.getAgent(id);
+        return agentMapper.selectAgent(id);
     }
 }

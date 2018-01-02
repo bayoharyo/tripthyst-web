@@ -10,10 +10,9 @@ import lombok.NoArgsConstructor;
 public class PackageModel {
 
     private int id;
-    private int idAgent;
-    private String packageName;
-    private String description;
-    private int destination;
+    private AgentModel agent;
+    private String destinationName;
+    private String island;
     private double price;
 
 }

@@ -15,6 +15,6 @@ public interface AgentMapper {
             @Result(property = "agentName", column = "agent_name"),
             @Result(property = "rating", column = "rating")
     })
-    AgentModel getAgent(int id);
+    AgentModel selectAgent(int id);
 
 }

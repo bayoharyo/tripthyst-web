@@ -8,8 +8,6 @@ public interface PackageService {
 
     List<PackageModel> getAllPackage();
 
-    List<PackageModel> getPackagesByDest(int id);
-
-    void addPackage(int idAgent, String packageName, String description, int destination, double price);
+    List<PackageModel> getPackagesByKeyword(String word);
 
 }
