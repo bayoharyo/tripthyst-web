@@ -1,9 +1,11 @@
 package com.tripthyst.webapp.rest;
 
 import com.tripthyst.webapp.model.AgentModel;
+import com.tripthyst.webapp.model.KeywordModel;
 import com.tripthyst.webapp.model.PackageModel;
 import com.tripthyst.webapp.model.RestModelWrapper;
 import com.tripthyst.webapp.service.AgentService;
+import com.tripthyst.webapp.service.KeywordService;
 import com.tripthyst.webapp.service.PackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,9 @@ public class RestApiController {
 
     @Autowired
     AgentService agentService;
+
+    @Autowired
+    KeywordService keywordService;
 
     // ---------- Package ---------- //
 
@@ -54,8 +59,9 @@ public class RestApiController {
         }
 
         return result;
-
     }
+
+
 
     // ---------- Agent ----------  //
 
@@ -73,6 +79,25 @@ public class RestApiController {
         }
 
         return result;
+    }
+
+    // ---------- Keyword ---------- //
+
+    @RequestMapping("/getKeywordSuggestion/{word}")
+    public RestModelWrapper<List<KeywordModel>> getKeywordSuggestion(@PathVariable("word") String word) {
+
+        RestModelWrapper<List<KeywordModel>> result;
+
+        List<KeywordModel> suggestions = keywordService.getKeywordSuggestion(word);
+
+        if (suggestions.size() == 0) {
+            result = new RestModelWrapper<>();
+        } else {
+            result = new RestModelWrapper<>(suggestions);
+        }
+
+        return result;
+
     }
 
 }
