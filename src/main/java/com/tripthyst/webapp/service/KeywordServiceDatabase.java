@@ -17,4 +17,9 @@ public class KeywordServiceDatabase implements KeywordService {
     public List<KeywordModel> getKeywordSuggestion(String word) {
         return keywordMapper.selectKeywordSuggestion("%" + word + "%");
     }
+
+    @Override
+    public List<KeywordModel> getMostVisited() {
+        return keywordMapper.selectMostVisited();
+    }
 }

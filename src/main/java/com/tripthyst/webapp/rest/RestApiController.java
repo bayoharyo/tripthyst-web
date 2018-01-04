@@ -100,4 +100,16 @@ public class RestApiController {
 
     }
 
+    @RequestMapping("/getMostVisitedKeywords")
+    public RestModelWrapper<List<KeywordModel>> getMostVisited() {
+
+        RestModelWrapper<List<KeywordModel>> result;
+
+        List<KeywordModel> mostVisitedKeywords = keywordService.getMostVisited();
+
+        result = new RestModelWrapper<>(mostVisitedKeywords);
+
+        return result;
+    }
+
 }

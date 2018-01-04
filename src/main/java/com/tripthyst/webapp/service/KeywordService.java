@@ -8,4 +8,6 @@ public interface KeywordService {
 
     List<KeywordModel> getKeywordSuggestion(String word);
 
+    List<KeywordModel> getMostVisited();
+
 }
