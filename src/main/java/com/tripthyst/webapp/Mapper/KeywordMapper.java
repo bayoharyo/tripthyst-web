@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface KeywordMapper {
 
-    @Select("select * from keyword where word like #{word}")
+    @Select("select * from keyword where word like #{word} limit 10")
     @Results(value = {
             @Result(property = "id", column = "id"),
             @Result(property = "word", column = "word")

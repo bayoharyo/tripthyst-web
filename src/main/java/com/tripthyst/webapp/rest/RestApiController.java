@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -46,16 +48,21 @@ public class RestApiController {
     }
 
     @RequestMapping("/getPackagesByKeyword/{word}")
-    public RestModelWrapper<List<PackageModel>> getPackagesByDest(@PathVariable("word") String word) {
+    public RestModelWrapper<Map<String, Object>> getPackagesByDest(@PathVariable("word") String word) {
 
-        RestModelWrapper<List<PackageModel>> result;
+        RestModelWrapper<Map<String, Object>> result;
 
         List<PackageModel> packages = packageService.getPackagesByKeyword(word);
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        resultMap.put("keyword", word);
+        resultMap.put("packages", packages);
 
         if (packages.size() == 0) {
             result = new RestModelWrapper<>();
         } else {
-            result = new RestModelWrapper<>(packages);
+            result = new RestModelWrapper<>(resultMap);
         }
 
         return result;

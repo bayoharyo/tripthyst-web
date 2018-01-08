@@ -20,7 +20,8 @@ public interface PackageMapper {
     List<PackageModel> selectAllPackage();
 
     @Select("select * from travel_package where id in (" +
-            "select id_package from package_keyword where word like #{word})")
+            "select id_package from package_keyword where word like #{word1} or word like #{word2} " +
+            "or word like #{word3} or word like #{word4})")
     @Results(value = {
             @Result(property = "id", column = "id"),
             @Result(property = "agent", column = "id_agent", one = @One(select = "selectAgent")),
@@ -28,7 +29,8 @@ public interface PackageMapper {
             @Result(property = "island", column = "island"),
             @Result(property = "price", column = "price")
     })
-    List<PackageModel> selectPackagesByKeyword(@Param("word") String word);
+    List<PackageModel> selectPackagesByKeyword(@Param("word1") String word1, @Param("word2") String word2,
+                                               @Param("word3") String word3, @Param("word4") String word4);
 
     @Select("select * from travel_agent where id=#{id}")
     @Results(value = {

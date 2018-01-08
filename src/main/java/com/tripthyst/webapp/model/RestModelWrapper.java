@@ -2,6 +2,8 @@ package com.tripthyst.webapp.model;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+
 @Data
 public class RestModelWrapper<E> {
 
@@ -16,8 +18,9 @@ public class RestModelWrapper<E> {
     }
 
     public RestModelWrapper() {
-        this.status = 404;
-        this.msg = "not found";
+        this.status = 200;
+        this.msg = "success";
+        this.result = (E) new ArrayList<E>();
     }
 
 }
