@@ -59,11 +59,7 @@ public class RestApiController {
         resultMap.put("keyword", word);
         resultMap.put("packages", packages);
 
-        if (packages.size() == 0) {
-            result = new RestModelWrapper<>();
-        } else {
-            result = new RestModelWrapper<>(resultMap);
-        }
+        result = new RestModelWrapper<>(resultMap);
 
         return result;
     }
