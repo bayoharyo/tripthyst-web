@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class KeywordModel {
-
-    private Long id;
-    private String word;
-
+public class UserModel {
+	
+	private Long id;
+	private String username;
+	private String password;
+	private String role;
+	
 }

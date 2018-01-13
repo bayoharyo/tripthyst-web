@@ -1,12 +1,16 @@
 package com.tripthyst.webapp.rest;
 
+import com.tripthyst.webapp.CustomUserDetails;
 import com.tripthyst.webapp.model.AgentModel;
 import com.tripthyst.webapp.model.KeywordModel;
 import com.tripthyst.webapp.model.PackageModel;
 import com.tripthyst.webapp.model.RestModelWrapper;
+import com.tripthyst.webapp.model.UserModel;
 import com.tripthyst.webapp.service.AgentService;
 import com.tripthyst.webapp.service.KeywordService;
 import com.tripthyst.webapp.service.PackageService;
+import com.tripthyst.webapp.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +33,9 @@ public class RestApiController {
 
     @Autowired
     KeywordService keywordService;
+    
+    @Autowired
+    UserService userService;
 
     // ---------- Package ---------- //
 
@@ -115,5 +122,14 @@ public class RestApiController {
 
         return result;
     }
-
+    
+    @RequestMapping(value = "/getUser/{username}", method = RequestMethod.GET)
+    public CustomUserDetails getUser(@PathVariable("username") String username) {
+    	
+    	CustomUserDetails csd = new CustomUserDetails(userService.getUser(username));
+    	
+    	return csd;
+    	
+    }
+    
 }

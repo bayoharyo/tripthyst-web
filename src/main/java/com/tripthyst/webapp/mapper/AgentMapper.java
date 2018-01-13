@@ -1,4 +1,4 @@
-package com.tripthyst.webapp.Mapper;
+package com.tripthyst.webapp.mapper;
 
 import com.tripthyst.webapp.model.AgentModel;
 import org.apache.ibatis.annotations.*;

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PackageModel {
 
-    private int id;
+    private Long id;
     private AgentModel agent;
     private String destinationName;
     private String island;
