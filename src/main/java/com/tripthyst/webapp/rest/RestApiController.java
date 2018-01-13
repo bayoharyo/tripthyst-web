@@ -1,11 +1,9 @@
 package com.tripthyst.webapp.rest;
 
-import com.tripthyst.webapp.CustomUserDetails;
 import com.tripthyst.webapp.model.AgentModel;
 import com.tripthyst.webapp.model.KeywordModel;
 import com.tripthyst.webapp.model.PackageModel;
 import com.tripthyst.webapp.model.RestModelWrapper;
-import com.tripthyst.webapp.model.UserModel;
 import com.tripthyst.webapp.service.AgentService;
 import com.tripthyst.webapp.service.KeywordService;
 import com.tripthyst.webapp.service.PackageService;
@@ -121,15 +119,6 @@ public class RestApiController {
         result = new RestModelWrapper<>(mostVisitedKeywords);
 
         return result;
-    }
-    
-    @RequestMapping(value = "/getUser/{username}", method = RequestMethod.GET)
-    public CustomUserDetails getUser(@PathVariable("username") String username) {
-    	
-    	CustomUserDetails csd = new CustomUserDetails(userService.getUser(username));
-    	
-    	return csd;
-    	
     }
     
 }
