@@ -9,7 +9,6 @@ public class PageController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
-        System.out.print("test !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return "index";
     }
 

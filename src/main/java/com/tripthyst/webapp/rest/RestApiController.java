@@ -10,6 +10,7 @@ import com.tripthyst.webapp.service.PackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -31,7 +32,7 @@ public class RestApiController {
 
     // ---------- Package ---------- //
 
-    @RequestMapping("/getAllPackages")
+    @RequestMapping(value = "/getAllPackages", method = RequestMethod.GET)
     public RestModelWrapper<List<PackageModel>> getAllPackage() {
 
         RestModelWrapper<List<PackageModel>> result;
@@ -47,7 +48,7 @@ public class RestApiController {
         return result;
     }
 
-    @RequestMapping("/getPackagesByKeyword/{word}")
+    @RequestMapping(value = "/getPackagesByKeyword/{word}", method = RequestMethod.GET)
     public RestModelWrapper<Map<String, Object>> getPackagesByDest(@PathVariable("word") String word) {
 
         RestModelWrapper<Map<String, Object>> result;
@@ -68,7 +69,7 @@ public class RestApiController {
 
     // ---------- Agent ----------  //
 
-    @RequestMapping("/getAgent/{id}")
+    @RequestMapping(value = "/getAgent/{id}", method = RequestMethod.GET)
     public RestModelWrapper<AgentModel> getAgent(@PathVariable("id") int id) {
 
         RestModelWrapper<AgentModel> result;
@@ -86,7 +87,7 @@ public class RestApiController {
 
     // ---------- Keyword ---------- //
 
-    @RequestMapping("/getKeywordSuggestion/{word}")
+    @RequestMapping(value = "/getKeywordSuggestion/{word}", method = RequestMethod.GET)
     public RestModelWrapper<List<KeywordModel>> getKeywordSuggestion(@PathVariable("word") String word) {
 
         RestModelWrapper<List<KeywordModel>> result;
@@ -103,7 +104,7 @@ public class RestApiController {
 
     }
 
-    @RequestMapping("/getMostVisitedKeywords")
+    @RequestMapping(value = "/getMostVisitedKeywords", method = RequestMethod.GET)
     public RestModelWrapper<List<KeywordModel>> getMostVisited() {
 
         RestModelWrapper<List<KeywordModel>> result;
