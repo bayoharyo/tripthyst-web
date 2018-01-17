@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security	.oauth2.provider.token.store.InMemoryTokenStore;
 
 @Configuration
 @EnableAuthorizationServer
@@ -27,11 +27,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory() 
-	        .withClient("client") 
-	        .secret("clientpassword")
-	        .scopes("read", "write") 
-	        .authorizedGrantTypes("password")
-	        .accessTokenValiditySeconds(3600);
+	        .withClient("android-app")
+	        .secret("aSKJDFd123f412D34df1234KJD1234FH1234JDKd")
+	        .scopes("read", "write", "trust")
+	        .authorizedGrantTypes("client_credentials","password","refresh_token")
+	        .accessTokenValiditySeconds(6000).refreshTokenValiditySeconds(6000);
     }
 	
 	@Bean

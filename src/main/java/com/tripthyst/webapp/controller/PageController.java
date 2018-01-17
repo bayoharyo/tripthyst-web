@@ -12,4 +12,9 @@ public class PageController {
         return "index";
     }
 
+    @RequestMapping(value = "/login")
+    public String login() {
+        return "login";
+    }
+
 }
