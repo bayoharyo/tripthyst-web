@@ -10,11 +10,18 @@ import com.tripthyst.webapp.service.PackageService;
 import com.tripthyst.webapp.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +41,8 @@ public class RestApiController {
     
     @Autowired
     UserService userService;
+
+    private static String UPLOADED_FOLDER =  "C:\\Users\\Lenovo\\Documents\\Tripthyst\\Images\\";
 
     // ---------- Package ---------- //
 
@@ -119,6 +128,45 @@ public class RestApiController {
         result = new RestModelWrapper<>(mostVisitedKeywords);
 
         return result;
+    }
+
+    @RequestMapping(value = "/createPackage", method = RequestMethod.POST)
+    public ResponseEntity<?> createPackage(@RequestParam("file") MultipartFile file,
+                                           @RequestParam("agent-id") int id,
+                                           @RequestParam("destination-name") String destinationName,
+                                           @RequestParam("island") String island,
+                                           @RequestParam("price") double price,
+                                           @RequestParam("schedule") List<String> schedules,
+                                           @RequestParam("facilities") String facilities,
+                                           @RequestParam("place") List<String> places,
+                                           @RequestParam("day") List<Integer> days,
+                                           @RequestParam("sched") List<String> scheds,
+                                           @RequestParam("desc") List<String> descs) {
+
+        //insert into travel_package table, package_schedule table, package_facility table, package itinerary table
+        packageService.postPackage(id, destinationName, island, price, schedules, facilities, places, days, scheds, descs);
+
+        long packageId = packageService.getLatestId();
+
+        //insert into keyword
+        keywordService.postKeyword(destinationName, island, places);
+
+        if (file.isEmpty()) {
+            return new ResponseEntity("Please select a file!", HttpStatus.OK);
+        }
+
+        try {
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER +  packageId + "_" + file.getOriginalFilename());
+            Files.write(path, bytes);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+
+        return new ResponseEntity("{msg : Successfully uploaded - " +
+                file.getOriginalFilename() + "}", new HttpHeaders(), HttpStatus.OK);
+
     }
     
 }

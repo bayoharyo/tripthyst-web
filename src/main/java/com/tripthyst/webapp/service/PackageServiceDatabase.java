@@ -17,6 +17,11 @@ public class PackageServiceDatabase implements PackageService{
     PackageMapper packageMapper;
 
     @Override
+    public long getLatestId() {
+        return  packageMapper.selectLatestInsertedPackage().getId();
+    }
+
+    @Override
     public List<PackageModel> getAllPackage() {
         return  packageMapper.selectAllPackage();
     }
@@ -79,7 +84,7 @@ public class PackageServiceDatabase implements PackageService{
         //insert package_keyword
         String keyword = ";" + destinationName + ";" + island;
         for (int i = 0 ; i < places.size(); i ++) {
-            if (i < 3) {
+            if (i < places.size() - 1) {
                 keyword += ";" + places.get(i);
             } else {
                 keyword += ";" + places.get(i) + ";";

@@ -22,6 +22,13 @@ public interface KeywordMapper {
     })
     List<KeywordModel> selectMostVisited();
 
+    @Select("select * from keyword where word=#{word}")
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "word", column = "word")
+    })
+    KeywordModel selectKeyword(@Param("word") String word);
+
     @Insert("insert into keyword (word) value (#{word})")
     void insertKeyword(@Param("word") String word);
 }

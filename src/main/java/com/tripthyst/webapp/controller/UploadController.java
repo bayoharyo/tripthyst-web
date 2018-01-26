@@ -1,6 +1,5 @@
 package com.tripthyst.webapp.controller;
 
-import com.tripthyst.webapp.mapper.PackageMapper;
 import com.tripthyst.webapp.service.KeywordService;
 import com.tripthyst.webapp.service.PackageService;
 import org.springframework.beans.factory.annotation.Autowired;

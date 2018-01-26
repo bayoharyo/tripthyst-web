@@ -25,11 +25,22 @@ public class KeywordServiceDatabase implements KeywordService {
 
     @Override
     public void postKeyword(String destinationName, String island, List<String> places) {
-        keywordMapper.insertKeyword(destinationName);
-        keywordMapper.insertKeyword(island);
+
+        KeywordModel keywordDestination = keywordMapper.selectKeyword(destinationName);
+        if (keywordDestination == null) {
+            keywordMapper.insertKeyword(destinationName);
+        }
+
+        KeywordModel keywordIsland = keywordMapper.selectKeyword(island);
+        if (keywordIsland == null) {
+            keywordMapper.insertKeyword(island);
+        }
 
         for (String place : places) {
-            keywordMapper.insertKeyword(place);
+            KeywordModel keywordPlace = keywordMapper.selectKeyword(place);
+            if (keywordPlace == null) {
+                keywordMapper.insertKeyword(place);
+            }
         }
     }
 
