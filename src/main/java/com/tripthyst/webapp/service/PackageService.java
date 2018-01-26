@@ -10,4 +10,7 @@ public interface PackageService {
 
     List<PackageModel> getPackagesByKeyword(String word);
 
+    void postPackage(int idAgent, String destinationName, String island, double price, List<String> schedules,
+                     String facilities, List<String> places, List<Integer> days, List<String> scheds, List<String> descs);
+
 }

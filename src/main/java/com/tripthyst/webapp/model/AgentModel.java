@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AgentModel {
 
-    private int id;
+    private long id;
     private String username;
     private String agentName;
+    private String bankAccountNumber;
+    private String officeAddress;
     private double rating;
 
 }

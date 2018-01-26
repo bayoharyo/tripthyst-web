@@ -10,4 +10,6 @@ public interface KeywordService {
 
     List<KeywordModel> getMostVisited();
 
+    void postKeyword(String destinationName, String island, List<String> places);
+
 }

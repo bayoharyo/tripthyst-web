@@ -22,4 +22,16 @@ public class KeywordServiceDatabase implements KeywordService {
     public List<KeywordModel> getMostVisited() {
         return keywordMapper.selectMostVisited();
     }
+
+    @Override
+    public void postKeyword(String destinationName, String island, List<String> places) {
+        keywordMapper.insertKeyword(destinationName);
+        keywordMapper.insertKeyword(island);
+
+        for (String place : places) {
+            keywordMapper.insertKeyword(place);
+        }
+    }
+
+
 }

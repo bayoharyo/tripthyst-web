@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h1>Create Package</h1>
+
+<form method="POST" action="/package/upload" enctype="multipart/form-data">
+
+    <input th:type="number" th:id="agent-id" th:name="agent-id" th:value="1" th:hidden="true" /><br/><br/>
+
+    <label>Destination Name : </label>
+    <input th:type="text" th:id="destination-name" th:name="destination-name" /><br/><br/>
+
+    <label>Island : </label>
+    <input th:type="text" th:id="island" th:name="island" /><br/><br/>
+
+    <label>Price : </label>
+    <input th:type="number" th:id="price" th:name="price" /><br/><br/>
+
+    <label>Schedule 1 : </label>
+    <input th:type="datetime-local" th:id="schedule-1" th:name="schedule" /><br/><br/>
+
+    <label>Schedule 2 : </label>
+    <input th:type="datetime-local" th:id="schedule-2" th:name="schedule" /><br/><br/>
+
+    <label>Facilities : </label>
+    <input th:type="text" th:id="facilities" th:name="facilities"  /><br/><br/>
+
+    <label>Itinerary Place 1</label>
+    <input th:type="text" th:id="place1" th:name="place" /><br/><br/>
+
+    <label>Itinerary Day 1</label>
+    <input th:type="number" th:id="day1" th:name="day" /><br/><br/>
+
+    <label>Itinerary Schedule 1</label>
+    <input th:type="time" th:id="sched1" th:name="sched" /><br/><br/>
+
+    <label>Itinerary Description 1</label>
+    <textarea th:id="desc1" th:name="desc"></textarea><br/><br/>
+
+    <label>Itinerary Place 2</label>
+    <input th:type="text" th:id="place2" th:name="place" /><br/><br/>
+
+    <label>Itinerary Day 2</label>
+    <input th:type="number" th:id="day2" th:name="day" /><br/><br/>
+
+    <label>Itinerary Schedule 2</label>
+    <input th:type="time" th:id="sched2" th:name="sched" /><br/><br/>
+
+    <label>Itinerary Description 2</label>
+    <textarea th:id="desc2" th:name="desc"></textarea><br/><br/>
+
+    <label>Itinerary Place 3</label>
+    <input th:type="text" th:id="place3" th:name="place" /><br/><br/>
+
+    <label>Itinerary Day 3</label>
+    <input th:type="number" th:id="day3" th:name="day" /><br/><br/>
+
+    <label>Itinerary Schedule 3</label>
+    <input th:type="time" th:id="sched3" th:name="sched" /><br/><br/>
+
+    <label>Itinerary Description 3</label>
+    <textarea th:id="desc3" th:name="desc"></textarea><br/><br/>
+
+    <label>Itinerary Place 4</label>
+    <input th:type="text" th:id="place4" th:name="place" /><br/><br/>
+
+    <label>Itinerary Day 4</label>
+    <input th:type="number" th:id="day3" th:name="day" /><br/><br/>
+
+    <label>Itinerary Schedule 4</label>
+    <input th:type="time" th:id="sched4" th:name="sched" /><br/><br/>
+
+    <label>Itinerary Description 4</label>
+    <textarea th:id="desc4" th:name="desc"></textarea><br/><br/>
+
+    <input th:type="file" th:name="file" /><br/><br/>
+    <input th:type="submit" th:value="Submit" />
+</form>
+
+</body>
+</html>
