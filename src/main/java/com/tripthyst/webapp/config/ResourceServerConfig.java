@@ -1,14 +1,12 @@
 package com.tripthyst.webapp.config;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -23,14 +21,9 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
-import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.util.WebUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 @Configuration
 @EnableResourceServer
@@ -39,16 +32,16 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 	@Autowired
 	DataSource dataSource;
-	
+
 	@Autowired
 	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(dataSource)
 		.usersByUsernameQuery(
 		"select username, password, enabled from user where username=?")
 		.authoritiesByUsernameQuery(
-		"select username, role from user_role where username=?"); 	
+		"select username, role from user_role where username=?");
 	}
-	
+
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http
@@ -56,7 +49,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 			.antMatchers("/").permitAll()
             .antMatchers("/api/**").authenticated()
         .and()
-            .formLogin()
+            .formLogin().loginPage("/login").permitAll()
             .successHandler(successHandler())
             .failureHandler(failureHandler())
         .and()
@@ -77,7 +70,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		return new AuthenticationSuccessHandler() {
 			@Override
 			public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-				httpServletResponse.getWriter().append("OK");
+				httpServletResponse.setContentType("application/json");
+				httpServletResponse.getWriter().append("{\"status\": \"200\", \"msg\": \"ok\"}");
 				httpServletResponse.setStatus(200);
 			}
 		};
@@ -87,7 +81,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		return new AuthenticationFailureHandler() {
 			@Override
 			public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-				httpServletResponse.getWriter().append("Authentication failure");
+				httpServletResponse.setContentType("application/json");
+				httpServletResponse.getWriter().append("{\"status\": \"401\", \"msg\": \"Authentication Failure\"}");
 				httpServletResponse.setStatus(401);
 			}
 		};
@@ -97,7 +92,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		return new AccessDeniedHandler() {
 			@Override
 			public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
-				httpServletResponse.getWriter().append("Access denied");
+				httpServletResponse.setContentType("application/json");
+				httpServletResponse.getWriter().append("{\"status\": \"403\", \"msg\": \"Access Denied\"}");
 				httpServletResponse.setStatus(403);
 			}
 		};
@@ -107,7 +103,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		return new AuthenticationEntryPoint() {
 			@Override
 			public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-				httpServletResponse.getWriter().append("Not authenticated");
+				httpServletResponse.setContentType("application/json");
+				httpServletResponse.getWriter().append("{\"status\": \"401\", \"msg\": \"Not Authenticated\"}");
 				httpServletResponse.setStatus(401);
 			}
 		};

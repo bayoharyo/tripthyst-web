@@ -17,7 +17,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	
 	@Autowired
     private AuthenticationManager authenticationManager;
-	
+
 	@Override
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints) {
 		endpoints.tokenStore(tokenStore())
