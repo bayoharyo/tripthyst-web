@@ -79,7 +79,21 @@ public class RestApiController {
         return result;
     }
 
+    @RequestMapping(value = "/getPackageDetails/{id}", method = RequestMethod.GET)
+    public RestModelWrapper<PackageModel> getPackageDetails(@PathVariable("id") long id) {
 
+        RestModelWrapper<PackageModel> result;
+
+        PackageModel packageModel = packageService.getPackageById(id);
+
+        if (packageModel == null) {
+            result = new RestModelWrapper<>();
+        } else {
+            result = new RestModelWrapper<>(packageModel);
+        }
+
+        return result;
+    }
 
     // ---------- Agent ----------  //
 

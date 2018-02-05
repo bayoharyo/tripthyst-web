@@ -8,6 +8,8 @@ public interface PackageService {
 
     List<PackageModel> getAllPackage();
 
+    PackageModel getPackageById(long id);
+
     List<PackageModel> getPackagesByKeyword(String word);
 
     void postPackage(int idAgent, String destinationName, String island, double price, List<String> schedules,

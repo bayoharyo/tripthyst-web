@@ -34,6 +34,16 @@ public interface PackageMapper {
     List<PackageModel> selectPackagesByKeyword(@Param("word1") String word1, @Param("word2") String word2,
                                                @Param("word3") String word3, @Param("word4") String word4);
 
+    @Select("select * from travel_package where id = #{id}")
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "agent", column = "id_agent", one = @One(select = "selectAgent")),
+            @Result(property = "destinationName", column = "destination_name"),
+            @Result(property = "island", column = "island"),
+            @Result(property = "price", column = "price")
+    })
+    PackageModel selectPackageById(@Param("id") long id);
+
     @Select("select * from travel_agent where id=#{id}")
     @Results(value = {
             @Result(property = "id", column = "id"),

@@ -27,6 +27,11 @@ public class PackageServiceDatabase implements PackageService{
     }
 
     @Override
+    public PackageModel getPackageById(long id) {
+        return packageMapper.selectPackageById(id);
+    }
+
+    @Override
     public List<PackageModel> getPackagesByKeyword(String word) {
         return packageMapper.selectPackagesByKeyword("%;" + word + ";%", "%;" + word + " %",
                 "% " + word + ";%", "% " + word + " %");
