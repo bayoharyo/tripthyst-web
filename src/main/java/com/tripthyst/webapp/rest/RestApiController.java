@@ -10,14 +10,17 @@ import com.tripthyst.webapp.service.PackageService;
 import com.tripthyst.webapp.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -42,7 +45,7 @@ public class RestApiController {
     @Autowired
     UserService userService;
 
-    private static String UPLOADED_FOLDER =  "C:\\Users\\Lenovo\\Documents\\Tripthyst\\Images\\";
+    private static String UPLOADED_FOLDER =  "C:\\Users\\Lenovo\\Documents\\Tripthyst\\github-repo\\src\\asset\\image\\";
 
     // ---------- Package ---------- //
 
@@ -89,6 +92,7 @@ public class RestApiController {
         if (packageModel == null) {
             result = new RestModelWrapper<>();
         } else {
+            packageModel.setImgUrl("/api/getImage/" + id);
             result = new RestModelWrapper<>(packageModel);
         }
 
@@ -144,6 +148,15 @@ public class RestApiController {
         return result;
     }
 
+    @RequestMapping(value = "/getImage/{idPackage}", produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
+    public @ResponseBody byte[] getImage(@PathVariable("idPackage") long idPackage) throws IOException {
+        List<String> imageName = packageService.getImage(idPackage);
+        System.out.print(imageName);
+        Path path = Paths.get(UPLOADED_FOLDER+imageName.get(0));
+        ByteArrayResource image = new ByteArrayResource(Files.readAllBytes(path));
+        return image.getByteArray();
+    }
+
     // ---------- POST ---------- //
     @RequestMapping(value = "/createPackage", method = RequestMethod.POST)
     public Map<String, String> createPackage(@RequestParam("file") MultipartFile[] files,
@@ -170,7 +183,6 @@ public class RestApiController {
 
 
         for (MultipartFile file : files) {
-
             if (file.isEmpty()) {
                 result.put("status", "401");
                 result.put("msg", "Please select you image !");
@@ -181,6 +193,7 @@ public class RestApiController {
                 byte[] bytes = file.getBytes();
                 Path path = Paths.get(UPLOADED_FOLDER + packageId + "_" + file.getOriginalFilename());
                 Files.write(path, bytes);
+                packageService.insertImage(packageId, packageId + "_" + file.getOriginalFilename());
             } catch (IOException e) {
                 result.put("status", "401");
                 result.put("msg", "Bad Request");

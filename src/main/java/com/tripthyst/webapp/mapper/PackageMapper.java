@@ -86,6 +86,9 @@ public interface PackageMapper {
     })
     ItineraryModel selectFacilityByIdPackage(@Param("idPackage") long idPackage);
 
+    @Select("select image_name from package_image where id_package = #{id_package}")
+    List<String> selectImage(@Param("id_package") long idPackage);
+
     @Insert("insert into travel_package (id_agent, destination_name, island, price) values (#{id_agent}, #{destination_name}, " +
             "#{island}, #{price})")
     void insertTravelPackage(@Param("id_agent") int idAgent, @Param("destination_name") String destinationName,
@@ -104,4 +107,7 @@ public interface PackageMapper {
 
     @Insert("insert into package_keyword (id_package, word) values (#{id_package}, #{word})")
     void insertPackageKeyword(@Param("id_package") long idPackage, @Param("word") String word);
+
+    @Insert("insert into package_image (id_package, image_name) values (#{id_package}, #{image_name})")
+    void insertPackageImage(@Param("id_package") long idPackage, @Param("image_name") String imageName);
 }

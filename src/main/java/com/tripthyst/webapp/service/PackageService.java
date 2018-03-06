@@ -16,4 +16,8 @@ public interface PackageService {
                      String facilities, List<String> places, List<Integer> days, List<String> scheds, List<String> descs);
 
     long getLatestId();
+
+    void insertImage(long id, String imageName);
+
+    List<String> getImage(long id);
 }

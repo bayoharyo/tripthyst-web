@@ -98,5 +98,14 @@ public class PackageServiceDatabase implements PackageService{
         packageMapper.insertPackageKeyword(packageId, keyword);
     }
 
+    @Override
+    public void insertImage(long id, String imageName) {
+        packageMapper.insertPackageImage(id,imageName);
+    }
+
+    @Override
+    public List<String> getImage(long id) {
+        return packageMapper.selectImage(id);
+    }
 
 }
