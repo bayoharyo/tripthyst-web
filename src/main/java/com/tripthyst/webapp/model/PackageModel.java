@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,5 +16,7 @@ public class PackageModel {
     private String destinationName;
     private String island;
     private double price;
+    private List<ItineraryModel> itineraryList;
+    private List<FacilityModel> facilityList;
 
 }

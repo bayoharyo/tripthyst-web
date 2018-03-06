@@ -1,9 +1,9 @@
 package com.tripthyst.webapp.mapper;
 
 import com.tripthyst.webapp.model.AgentModel;
+import com.tripthyst.webapp.model.ItineraryModel;
 import com.tripthyst.webapp.model.PackageModel;
 import org.apache.ibatis.annotations.*;
-import org.springframework.security.access.method.P;
 
 import java.util.Date;
 import java.util.List;
@@ -40,7 +40,9 @@ public interface PackageMapper {
             @Result(property = "agent", column = "id_agent", one = @One(select = "selectAgent")),
             @Result(property = "destinationName", column = "destination_name"),
             @Result(property = "island", column = "island"),
-            @Result(property = "price", column = "price")
+            @Result(property = "price", column = "price"),
+            @Result(property = "itineraryList", column = "id", many = @Many(select = "selectItineraryByIdPackage")),
+            @Result(property = "facilityList", column = "id", many = @Many(select = "selectFacilityByIdPackage"))
     })
     PackageModel selectPackageById(@Param("id") long id);
 
@@ -65,6 +67,24 @@ public interface PackageMapper {
             @Result(property = "price", column = "price")
     })
     PackageModel selectLatestInsertedPackage();
+
+    @Select("select * from package_itinerary where id_package = #{idPackage}")
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "idPackage", column = "id_package"),
+            @Result(property = "place", column = "place"),
+            @Result(property = "day", column = "day"),
+            @Result(property = "schedule", column = "schedule"),
+            @Result(property = "description", column = "description")
+    })
+    ItineraryModel selectItineraryByIdPackage(@Param("idPackage") long idPackage);
+
+    @Select("select * from package_itinerary where id_package = #{idPackage}")
+    @Results(value = {
+            @Result(property = "idPackage", column = "id_package"),
+            @Result(property = "facility", column = "facility")
+    })
+    ItineraryModel selectFacilityByIdPackage(@Param("idPackage") long idPackage);
 
     @Insert("insert into travel_package (id_agent, destination_name, island, price) values (#{id_agent}, #{destination_name}, " +
             "#{island}, #{price})")

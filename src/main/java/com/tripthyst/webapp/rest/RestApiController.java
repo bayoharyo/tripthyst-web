@@ -144,10 +144,9 @@ public class RestApiController {
         return result;
     }
 
-
     // ---------- POST ---------- //
     @RequestMapping(value = "/createPackage", method = RequestMethod.POST)
-    public ResponseEntity<?> createPackage(@RequestParam("file") MultipartFile file,
+    public Map<String, String> createPackage(@RequestParam("file") MultipartFile[] files,
                                            @RequestParam("agent-id") int id,
                                            @RequestParam("destination-name") String destinationName,
                                            @RequestParam("island") String island,
@@ -159,6 +158,8 @@ public class RestApiController {
                                            @RequestParam("sched") List<String> scheds,
                                            @RequestParam("desc") List<String> descs) {
 
+        Map<String, String> result = new HashMap<>();
+
         //insert into travel_package table, package_schedule table, package_facility table, package itinerary table
         packageService.postPackage(id, destinationName, island, price, schedules, facilities, places, days, scheds, descs);
 
@@ -167,22 +168,30 @@ public class RestApiController {
         //insert into keyword
         keywordService.postKeyword(destinationName, island, places);
 
-        if (file.isEmpty()) {
-            return new ResponseEntity("Please select a file!", HttpStatus.OK);
+
+        for (MultipartFile file : files) {
+
+            if (file.isEmpty()) {
+                result.put("status", "401");
+                result.put("msg", "Please select you image !");
+                return result;
+            }
+
+            try {
+                byte[] bytes = file.getBytes();
+                Path path = Paths.get(UPLOADED_FOLDER + packageId + "_" + file.getOriginalFilename());
+                Files.write(path, bytes);
+            } catch (IOException e) {
+                result.put("status", "401");
+                result.put("msg", "Bad Request");
+                return result;
+            }
         }
 
-        try {
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER +  packageId + "_" + file.getOriginalFilename());
-            Files.write(path, bytes);
-        } catch (IOException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        result.put("status", "200");
+        result.put("msg", "You have successfully create a travel package");
 
-
-        return new ResponseEntity("{msg : Successfully uploaded - " +
-                file.getOriginalFilename() + "}", new HttpHeaders(), HttpStatus.OK);
-
+        return result;
     }
     
 }
