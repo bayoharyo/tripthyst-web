@@ -15,8 +15,9 @@ public interface AgentMapper {
             @Result(property = "agentName", column = "agent_name"),
             @Result(property = "bankAccountNumber", column = "bank_account_number"),
             @Result(property = "officeAddress", column = "office_address"),
-            @Result(property = "rating", column = "rating")
+            @Result(property = "rating", column = "rating"),
+            @Result(property = "imageName", column = "image_name")
     })
-    AgentModel selectAgent(int id);
+    AgentModel selectAgent(long id);
 
 }

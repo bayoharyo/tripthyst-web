@@ -23,12 +23,19 @@ public class PackageServiceDatabase implements PackageService{
 
     @Override
     public List<PackageModel> getAllPackage() {
-        return  packageMapper.selectAllPackage();
+        List<PackageModel> result = packageMapper.selectAllPackage();
+        for (PackageModel packageModel : result) {
+            packageModel.getAgent().setImageUrl();
+        }
+
+        return result;
     }
 
     @Override
     public PackageModel getPackageById(long id) {
-        return packageMapper.selectPackageById(id);
+        PackageModel packageModel = packageMapper.selectPackageById(id);
+        packageModel.getAgent().setImageUrl();
+        return packageModel;
     }
 
     @Override

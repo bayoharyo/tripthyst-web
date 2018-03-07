@@ -18,7 +18,7 @@ public interface PackageMapper {
             @Result(property = "destinationName", column = "destination_name"),
             @Result(property = "island", column = "island"),
             @Result(property = "price", column = "price")
-    })
+    })  
     List<PackageModel> selectAllPackage();
 
     @Select("select * from travel_package where id in (" +
@@ -53,7 +53,8 @@ public interface PackageMapper {
             @Result(property = "agentName", column = "agent_name"),
             @Result(property = "bankAccountNumber", column = "bank_account_number"),
             @Result(property = "officeAddress", column = "office_address"),
-            @Result(property = "rating", column = "rating")
+            @Result(property = "rating", column = "rating"),
+            @Result(property = "imageName", column = "image_name")
     })
     AgentModel selectAgent(@Param("id") int id);
 

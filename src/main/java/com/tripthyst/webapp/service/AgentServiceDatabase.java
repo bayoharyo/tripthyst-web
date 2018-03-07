@@ -12,7 +12,9 @@ public class AgentServiceDatabase implements AgentService{
     AgentMapper agentMapper;
 
     @Override
-    public AgentModel getAgent(int id) {
-        return agentMapper.selectAgent(id);
+    public AgentModel getAgent(long id) {
+        AgentModel agent = agentMapper.selectAgent(id);
+        return agent;
     }
+
 }

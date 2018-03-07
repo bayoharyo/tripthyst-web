@@ -15,5 +15,11 @@ public class AgentModel {
     private String bankAccountNumber;
     private String officeAddress;
     private double rating;
+    private String imageName;
+    private String imageUrl;
+
+    public void setImageUrl() {
+        this.setImageUrl("/api/getImage/" + this.imageName);
+    }
 
 }

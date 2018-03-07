@@ -88,11 +88,13 @@ public class RestApiController {
         RestModelWrapper<PackageModel> result;
 
         PackageModel packageModel = packageService.getPackageById(id);
+        packageModel.getAgent().setImageUrl();
+        List<String> imageName = packageService.getImage(id);
 
         if (packageModel == null) {
             result = new RestModelWrapper<>();
         } else {
-            packageModel.setImgUrl("/api/getImage/" + id);
+            packageModel.setImgUrl("/api/getImage/" + imageName.get(0));
             result = new RestModelWrapper<>(packageModel);
         }
 
@@ -102,12 +104,13 @@ public class RestApiController {
     // ---------- Agent ----------  //
 
     @RequestMapping(value = "/getAgent/{id}", method = RequestMethod.GET)
-    public RestModelWrapper<AgentModel> getAgent(@PathVariable("id") int id) {
+    public RestModelWrapper<AgentModel> getAgent(@PathVariable("id") long id) {
 
         RestModelWrapper<AgentModel> result;
 
         AgentModel agent = agentService.getAgent(id);
-
+        agent.setImageUrl();
+        System.out.print(agent);
         if (agent == null) {
             result = new RestModelWrapper<>();
         } else {
@@ -148,11 +151,10 @@ public class RestApiController {
         return result;
     }
 
-    @RequestMapping(value = "/getImage/{idPackage}", produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
-    public @ResponseBody byte[] getImage(@PathVariable("idPackage") long idPackage) throws IOException {
-        List<String> imageName = packageService.getImage(idPackage);
+    @RequestMapping(value = "/getImage/{imageName:.*}", produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
+    public @ResponseBody byte[] getPackageImage(@PathVariable("imageName") String imageName) throws IOException {
         System.out.print(imageName);
-        Path path = Paths.get(UPLOADED_FOLDER+imageName.get(0));
+        Path path = Paths.get(UPLOADED_FOLDER+imageName);
         ByteArrayResource image = new ByteArrayResource(Files.readAllBytes(path));
         return image.getByteArray();
     }
