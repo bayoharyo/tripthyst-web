@@ -18,6 +18,6 @@ public class PackageModel {
     private double price;
     private List<ItineraryModel> itineraryList;
     private List<FacilityModel> facilityList;
-    private String imgUrl;
+    private List<String> imgUrl;
 
 }

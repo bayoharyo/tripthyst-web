@@ -24,10 +24,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -45,7 +42,7 @@ public class RestApiController {
     @Autowired
     UserService userService;
 
-    private static String UPLOADED_FOLDER =  "C:\\Users\\Lenovo\\Documents\\Tripthyst\\github-repo\\src\\asset\\image\\";
+    private static String UPLOADED_FOLDER =  "C:\\Users\\Lenovo\\Documents\\Tripthyst\\github-repo\\src\\main\\resources\\static\\upload\\";
 
     // ---------- Package ---------- //
 
@@ -59,6 +56,21 @@ public class RestApiController {
         if (allPackage.size() == 0) {
             result = new RestModelWrapper<>();
         } else {
+            //dummy
+            for (PackageModel packageModel : allPackage) {
+                //dummy
+                List<String> imageUrls = new ArrayList<>();
+                packageModel.setImgUrl(imageUrls);
+                if(packageModel.getId() == 1) {
+                    packageModel.getImgUrl().add("https://4.bp.blogspot.com/-MpuvEZLOBFk/VyBDgWsYInI/AAAAAAAADoc/NEegGCh0aL8i8YAK1cT7x_U8Re6hUHVtwCLcB/s640/banyuwangi%2Bgunung%2Bijen.jpg");
+                    packageModel.getImgUrl().add("http://fastboatmurahkegili.com/wp-content/uploads/teluk-hijau-di-banyuwangi.jpg");
+                    packageModel.getImgUrl().add("http://static.asiawebdirect.com/m/bangkok/portals/bali-indonesia-com/homepage/magazine/banyuwangi/allParagraphs/0/ListingContainer/00/image/banyuwangi-nature.jpg");
+                } else {
+                    packageModel.getImgUrl().add("https://www.bali.com/media/image/663/best-resorts-bali.jpg");
+                    packageModel.getImgUrl().add("http://static.asiawebdirect.com/m/bangkok/portals/bali-indonesia-com/homepage/pagePropertiesOgImage/bali.jpg.jpg");
+                    packageModel.getImgUrl().add("http://static.asiawebdirect.com/m/bangkok/portals/bali-indonesia-com/shared/teasersL/hotels/top10-beach-resort[2]/teaserMultiLarge/imageHilight/10best-beach-hotel-bali.jpg");
+                }
+            }
             result = new RestModelWrapper<>(allPackage);
         }
 
@@ -88,13 +100,26 @@ public class RestApiController {
         RestModelWrapper<PackageModel> result;
 
         PackageModel packageModel = packageService.getPackageById(id);
-        packageModel.getAgent().setImageUrl();
-        List<String> imageName = packageService.getImage(id);
 
         if (packageModel == null) {
             result = new RestModelWrapper<>();
         } else {
-            packageModel.setImgUrl("/api/getImage/" + imageName.get(0));
+            //notdummy
+            /*packageModel.setImgUrl("/api/getImage/" + imageName.get(0));*/
+
+            //dummy
+            List<String> imageUrls = new ArrayList<>();
+            packageModel.setImgUrl(imageUrls);
+            if(id == 1) {
+                packageModel.getImgUrl().add("https://4.bp.blogspot.com/-MpuvEZLOBFk/VyBDgWsYInI/AAAAAAAADoc/NEegGCh0aL8i8YAK1cT7x_U8Re6hUHVtwCLcB/s640/banyuwangi%2Bgunung%2Bijen.jpg");
+                packageModel.getImgUrl().add("http://fastboatmurahkegili.com/wp-content/uploads/teluk-hijau-di-banyuwangi.jpg");
+                packageModel.getImgUrl().add("http://static.asiawebdirect.com/m/bangkok/portals/bali-indonesia-com/homepage/magazine/banyuwangi/allParagraphs/0/ListingContainer/00/image/banyuwangi-nature.jpg");
+            } else {
+                packageModel.getImgUrl().add("https://www.bali.com/media/image/663/best-resorts-bali.jpg");
+                packageModel.getImgUrl().add("http://static.asiawebdirect.com/m/bangkok/portals/bali-indonesia-com/homepage/pagePropertiesOgImage/bali.jpg.jpg");
+                packageModel.getImgUrl().add("http://static.asiawebdirect.com/m/bangkok/portals/bali-indonesia-com/shared/teasersL/hotels/top10-beach-resort[2]/teaserMultiLarge/imageHilight/10best-beach-hotel-bali.jpg");
+            }
+
             result = new RestModelWrapper<>(packageModel);
         }
 
@@ -109,7 +134,10 @@ public class RestApiController {
         RestModelWrapper<AgentModel> result;
 
         AgentModel agent = agentService.getAgent(id);
-        agent.setImageUrl();
+
+        //dummy
+
+        agent.setImageUrl("https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAnZAAAAJGNmY2Y0OTU2LTBiNWYtNDFiMi1hMWExLTJjMzQyNDBlZTZiNg.jpg");
         System.out.print(agent);
         if (agent == null) {
             result = new RestModelWrapper<>();

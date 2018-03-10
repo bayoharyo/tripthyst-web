@@ -1,6 +1,7 @@
 package com.tripthyst.webapp.mapper;
 
 import com.tripthyst.webapp.model.AgentModel;
+import com.tripthyst.webapp.model.FacilityModel;
 import com.tripthyst.webapp.model.ItineraryModel;
 import com.tripthyst.webapp.model.PackageModel;
 import org.apache.ibatis.annotations.*;
@@ -18,7 +19,7 @@ public interface PackageMapper {
             @Result(property = "destinationName", column = "destination_name"),
             @Result(property = "island", column = "island"),
             @Result(property = "price", column = "price")
-    })  
+    })
     List<PackageModel> selectAllPackage();
 
     @Select("select * from travel_package where id in (" +
@@ -80,12 +81,12 @@ public interface PackageMapper {
     })
     ItineraryModel selectItineraryByIdPackage(@Param("idPackage") long idPackage);
 
-    @Select("select * from package_itinerary where id_package = #{idPackage}")
+    @Select("select * from package_facility where id_package = #{idPackage}")
     @Results(value = {
             @Result(property = "idPackage", column = "id_package"),
             @Result(property = "facility", column = "facility")
     })
-    ItineraryModel selectFacilityByIdPackage(@Param("idPackage") long idPackage);
+    FacilityModel selectFacilityByIdPackage(@Param("idPackage") long idPackage);
 
     @Select("select image_name from package_image where id_package = #{id_package}")
     List<String> selectImage(@Param("id_package") long idPackage);

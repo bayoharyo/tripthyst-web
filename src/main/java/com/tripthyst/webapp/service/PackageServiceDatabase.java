@@ -25,7 +25,7 @@ public class PackageServiceDatabase implements PackageService{
     public List<PackageModel> getAllPackage() {
         List<PackageModel> result = packageMapper.selectAllPackage();
         for (PackageModel packageModel : result) {
-            packageModel.getAgent().setImageUrl();
+            packageModel.getAgent().setImageUrl("https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAnZAAAAJGNmY2Y0OTU2LTBiNWYtNDFiMi1hMWExLTJjMzQyNDBlZTZiNg.jpg");
         }
 
         return result;
@@ -34,7 +34,7 @@ public class PackageServiceDatabase implements PackageService{
     @Override
     public PackageModel getPackageById(long id) {
         PackageModel packageModel = packageMapper.selectPackageById(id);
-        packageModel.getAgent().setImageUrl();
+        packageModel.getAgent().setImageUrl("https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAnZAAAAJGNmY2Y0OTU2LTBiNWYtNDFiMi1hMWExLTJjMzQyNDBlZTZiNg.jpg");
         return packageModel;
     }
 
